@@ -6,20 +6,6 @@
   (let [raw-input (slurp "resources/day01.txt")]
     (string/split raw-input #"\n")))
 
-(defn part-1 []
-  (loop [xs puzzle-input
-         x (first puzzle-input)
-         max-so-far 0
-         current-holdings []]
-    (if (empty? xs)
-      max-so-far
-      (if (= x "")
-        (let [current-elements-sum (reduce + (map common/str->int current-holdings))]
-          (if (> current-elements-sum max-so-far)
-            (recur (rest xs) (first xs) current-elements-sum [])
-            (recur (rest xs) (first xs) max-so-far [])))
-        (recur (rest xs) (first xs) max-so-far (conj current-holdings x))))))
-
 (defn calculate-calorie-values []
   (loop [x (first puzzle-input)
          xs puzzle-input
@@ -31,6 +17,11 @@
         (let [new-val (reduce + intermediate-vals)]
           (recur (first xs) (rest xs) [] (conj final-vals new-val)))
         (recur (first xs) (rest xs) (conj intermediate-vals (common/str->int x)) final-vals)))))
+
+(defn part-1 []
+  (let [xs (calculate-calorie-values)]
+    (apply max xs)))
+
 
 (defn part-2 []
   (let [xs (calculate-calorie-values)]
