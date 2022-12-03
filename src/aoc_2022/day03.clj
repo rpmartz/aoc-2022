@@ -77,11 +77,28 @@
         common-letter (first (clojure.set/intersection s1 s2))]
     (get letters-to-priorities common-letter)))
 
+(defn score-group [group]
+  (let [e1 (get-letter-set (first group))
+        e2 (get-letter-set (second group))
+        e3 (get-letter-set (last group))
+        common-letter (first (clojure.set/intersection e1 e2 e3))]
+    (get letters-to-priorities common-letter)))
+
 
 (defn part-1 []
   (reduce + (map score-line lines)))
 
+(defn part-2 []
+  (loop [xs lines
+         acc 0]
+    (if (empty? xs)
+      acc
+      (recur
+       (drop 3 xs)
+       (+ acc (score-group (take 3 xs)))))))
+
 (do
-  (part-1))
+  (part-1)
+  (part-2))
 
 
