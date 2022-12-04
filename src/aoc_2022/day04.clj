@@ -15,7 +15,7 @@
         right-interval (parse-interval (second pair))]
     (concat left-interval right-interval)))
 
-(defn overlaps? [xs]
+(defn overlaps-completely? [xs]
   (let [lb (first xs)
         le (second xs)
         rb (first (drop 2 xs))
@@ -25,11 +25,25 @@
       (and (<= rb lb) (>= re le)) true
       :else false)))
 
+(defn overlaps-at-all? [xs]
+  (let [lb (first xs)
+        le (second xs)
+        rb (first (drop 2 xs))
+        re (second (drop 2 xs))]
+    (cond
+      (and (<= lb rb) (>= le rb)) true
+      (and (<= rb lb) (>= re lb)) true
+      :else false)))
+
 (def interval-list
   (map parse-intervals (map #(string/split % #",") lines)))
 
 (defn part-1 []
-  (reduce + (map #(if (overlaps? %) 1 0) interval-list)))
+  (reduce + (map #(if (overlaps-completely? %) 1 0) interval-list)))
+
+(defn part-2 []
+  (reduce + (map #(if (overlaps-at-all? %) 1 0) interval-list)))
 
 (do
-  (part-1))
+  (println (part-1))
+  (println (part-2)))
