@@ -1,6 +1,5 @@
 (ns aoc-2022.day06)
 
-
 (def input (slurp "resources/day06.txt"))
 
 (defn part-1 []
