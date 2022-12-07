@@ -2,7 +2,7 @@
   (:require clojure.set
             [clojure.string :as string]))
 
-(defn print-letters 
+(defn print-letters
   "Prints the letter of the crate on the top of each stack"
   [stacks]
   (println (str
@@ -14,9 +14,7 @@
             (first (get stacks 6))
             (first (get stacks 7))
             (first (get stacks 8))
-            (first (get stacks 9))))) 
-
-(print-letters initial-stack-config)
+            (first (get stacks 9)))))
 
 (defn drop-text [line]
   (let [move-dropped (string/replace line #"move " "")
@@ -43,46 +41,3 @@
                             7 (list "Z" "L" "S" "F" "Q" "R" "P" "D")
                             8 (list "W" "P" "F" "D" "H" "L" "S" "C")
                             9 (list "Z" "G" "N" "F" "P" "M" "S" "D")})
-
-(defn update-stack [stack-num item]
-  (let [s (get initial-stack-config stack-num)]
-    (.push s item)
-    (assoc initial-stack-config stack-num s)))
-
-(defn process-instruction [instruction]
-  (let [num-to-move (get instruction :num)
-        src-stack-num (get instruction :src)
-        src-stack (get initial-stack-config src-stack-num)
-        dst-stack-num (get instruction :dst)
-        dst-stack (get instruction dst-stack-num)]
-
-    (let [n num-to-move
-          items (take n src-stack)]
-      (loop [crates]))
-
-    (assoc initial-stack-config src-stack-num (drop num-to-move src-stack))))
-
-
-
-(defn update-positions [crates instruction]
-  (let [n (get instruction :num)]))
-
-(let [final-stacks (do
-                     (loop [instruction (first (map parse-instruction raw-instructions))
-                            instructions (rest (map parse-instruction raw-instructions))
-                            crates initial-stack-config]
-                       (if (empty? instructions)
-                         initial-stack-config
-                         (recur
-                          (first instructions)
-                          (rest instructions) (let [ss crates
-                                                    num-to-move (get instruction :num)
-                                                    src-stack-num (get instruction :src)
-                                                    src-stack (get initial-stack-config src-stack-num)
-                                                    dst-stack-num (get instruction :dst)
-                                                    dst-stack (get instruction dst-stack-num)]
-                                                
-                                                (assoc ss src-stack-num (drop num-to-move src-stack))
-                                                ss)))))]
-                                                
-  (do (print-letters final-stacks)))
