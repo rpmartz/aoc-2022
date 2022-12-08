@@ -1,6 +1,6 @@
 (ns aoc-2022.day04
-  (:require [aoc-2022.common :as common]
-            [clojure.string :as string]))
+  (:require
+   [clojure.string :as string]))
 
 (def lines (string/split-lines (slurp "resources/day04.txt")))
 
