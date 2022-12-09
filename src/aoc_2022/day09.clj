@@ -24,7 +24,7 @@
      :tail-visited (conj tvisited head)}))
 
 (defn adjacent? [p1 p2]
-  (and (= 1 (abs (- (:x p1) (:x p2)))) (= 1 (abs (- (:y p1) (:y p2))))))
+  (and (>= 1 (abs (- (:x p1) (:x p2)))) (>= 1 (abs (- (:y p1) (:y p2))))))
 
 (defn move-vertically
   "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
@@ -68,6 +68,8 @@
          state initial-state]
     (if (nil? move) (count (:tail-visited state))
         (recur moves (perform-move move state)))))
+
+(adjacent? {:x 3 :y 3} {:x 4 :y 3})
 
 (do
   (println (part-1)))

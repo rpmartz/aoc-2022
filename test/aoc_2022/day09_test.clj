@@ -68,6 +68,13 @@
 
 (deftest test-adjacency
   (testing "Test whether two points are adjacent"
-    (is (true? (adjacent? {:x 3 :y 3} {:x 4 :y 4})))
     (is (true? (not (adjacent? {:x 3 :y 3} {:x 4 :y 5}))))
-    (is (true? (not (adjacent? {:x 3 :y 3} {:x 4 :y 1}))))))
+    (is (true? (not (adjacent? {:x 3 :y 3} {:x 4 :y 1}))))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 2 :y 4})))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 3 :y 4})))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 4 :y 4})))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 4 :y 3})))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 4 :y 2})))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 3 :y 2})))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 2 :y 2})))
+    (is (true? (adjacent? {:x 3 :y 3} {:x 2 :y 3})))))
