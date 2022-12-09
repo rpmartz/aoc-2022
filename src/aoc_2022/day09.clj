@@ -68,8 +68,7 @@
       (if (= 0 n) state
           (recur (dec n) (fn state))))))
 
-(defn simulate [move-list state]
-  (println (str "\tInitial state" state))
+(defn simulate [move-list state] 
   (loop [[move & moves] move-list
          state state]
     (if (nil? move) (count (:tail-visited state))
