@@ -13,18 +13,23 @@
                     :tail {:x 0 :y 0}
                     :head-visited #{{:x 0 :y 0}}
                     :tail-visited #{{:x 0 :y 0}}})
-(defn move-laterally
-  "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
-  [state f]
-  (let [{head :head hvisited :head-visited tvisited :tail-visited} state
-        updated-head-coord {:x (f (get head :x)) :y (get head :y)}]
-    {:head updated-head-coord
-     :tail head
-     :head-visited (conj hvisited updated-head-coord)
-     :tail-visited (conj tvisited head)}))
 
 (defn adjacent? [p1 p2]
   (and (>= 1 (abs (- (:x p1) (:x p2)))) (>= 1 (abs (- (:y p1) (:y p2))))))
+
+(defn move-laterally
+  "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
+  [state f]
+  (let [{head :head
+         tail :tail
+         hvisited :head-visited
+         tvisited :tail-visited} state
+        updated-head-coord {:x (f (get head :x)) :y (get head :y)}
+        updated-tail-coord (if (adjacent? tail updated-head-coord) tail head)]
+    {:head updated-head-coord
+     :tail updated-tail-coord
+     :head-visited (conj hvisited updated-head-coord)
+     :tail-visited (conj tvisited updated-tail-coord)}))
 
 (defn move-vertically
   "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
@@ -63,13 +68,15 @@
       (if (= 0 n) state
           (recur (dec n) (fn state))))))
 
-(defn part-1 []
-  (loop [[move & moves] (map parse-move input)
-         state initial-state]
+(defn simulate [move-list state]
+  (println (str "\tInitial state" state))
+  (loop [[move & moves] move-list
+         state state]
     (if (nil? move) (count (:tail-visited state))
         (recur moves (perform-move move state)))))
 
-(adjacent? {:x 3 :y 3} {:x 4 :y 3})
+(defn part-1 []
+  (simulate (map parse-move input) initial-state))
 
 (do
   (println (part-1)))

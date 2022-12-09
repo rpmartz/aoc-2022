@@ -1,6 +1,7 @@
 (ns aoc-2022.day09-test
   (:require [clojure.test :refer :all]
-            [aoc-2022.day09 :refer :all]))
+            [aoc-2022.day09 :refer :all]
+            [aoc-2022.common :as aoc]))
 
 
 (deftest test-parsing-move
@@ -25,17 +26,6 @@
                                         {:x 2 :y 3}}
                         :tail-visited #{{:x 0 :y 3}
                                         {:x 1 :y 3}}})))))
-
-(deftest test-moving-left
-  (testing "Test moving left"
-    (is (= {:head {:x 3 :y 3}
-            :tail {:x 4 :y 3}
-            :head-visited #{{:x 4 :y 3} {:x 3 :y 3}}
-            :tail-visited #{{:x 5 :y 3} {:x 4 :y 3}}}
-           (move-left {:head {:x 4 :y 3}
-                       :tail {:x 5 :y 3}
-                       :head-visited #{{:x 4 :y 3}}
-                       :tail-visited #{{:x 5 :y 3}}})))))
 
 (deftest test-moving-left
   (testing "Test moving left"
@@ -78,3 +68,17 @@
     (is (true? (adjacent? {:x 3 :y 3} {:x 3 :y 2})))
     (is (true? (adjacent? {:x 3 :y 3} {:x 2 :y 2})))
     (is (true? (adjacent? {:x 3 :y 3} {:x 2 :y 3})))))
+
+(def sample-moves
+  [{:dir :R :steps 4}
+   {:dir :U :steps 4}
+   {:dir :L :steps 3}
+   {:dir :D :steps 1}
+   {:dir :R :steps 4}
+   {:dir :D :steps 1}
+   {:dir :L :steps 5}
+   {:dir :R :steps 2}])
+
+(deftest test-example
+  (testing "Testing problem example"
+    (is (= 13 (simulate sample-moves initial-state)))))
