@@ -49,22 +49,25 @@
 (defn move-down [state]
   (move-vertically state dec))
 
-(defn perform-move
-  "Updates `state` based on the result of `move`
-   
-   move is a dictionary with a :dir and :steps
-   state matches the structure of `initial-state
-   "
-  [{dir :dir n :steps} move
-   state])
+(def move-functions {:R move-right
+                     :L move-left
+                     :U move-up
+                     :D move-down})
+
+(defn perform-move [move state]
+  (let [dir (:dir move)
+        n (:steps move)
+        fn (get move-functions dir)]
+    (loop [n n
+           state state]
+      (if (= 0 n) state
+          (recur (dec n) (fn state))))))
 
 (defn part-1 []
-  (let [moves (map parse-move input)]))
-
-
-(conj #{"a" "b" "c"} "d")
-
-
+  (loop [[move & moves] (map parse-move input)
+         state initial-state]
+    (if (nil? move) (count (:tail-visited state))
+        (recur moves (perform-move move state)))))
 
 (do
   (println (part-1)))
