@@ -1,6 +1,5 @@
 (ns aoc-2022.day02
-  (:require [aoc-2022.common :as common]
-            [clojure.string :as string]))
+  (:require [clojure.string :as string]))
 
 (def letter-map {"A" :rock
                  "B" :paper
