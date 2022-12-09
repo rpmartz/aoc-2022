@@ -11,20 +11,31 @@
 ; map to track position of head and tail, as well as visited nodes
 (def initial-state {:head {:x 0 :y 0}
                     :tail {:x 0 :y 0}
-                    :head-visited #{}
-                    :tail-visited #{}})
+                    :head-visited #{{:x 0 :y 0}}
+                    :tail-visited #{{:x 0 :y 0}}})
 
 (defn move-right [state]
-  (let [{head :head
-         tail :tail
+  (let [{head :head 
          hvisited :head-visited
          tvisited :tail-visited} state 
+        updated-head-coord {:x (inc (get head :x)) :y (get head :y)}
         ]
-    {:head {:x (inc (get head :x)) :y (get head :y)}
+    {:head updated-head-coord
      :tail head
-     :head-visited (conj hvisited {:x (inc (get head :x)) :y (get head :y)})
+     :head-visited (conj hvisited updated-head-coord)
      :tail-visited (conj tvisited head)}))
 
+(defn move-left [state]
+  (let [{head :head
+         hvisited :head-visited
+         tvisited :tail-visited} state
+        ; todo refactor this into a move-lateral fn that takes an update fn and applies it to x since 
+        ; it is the only thing that really differs between moving left and right
+        updated-head-coord {:x (dec (get head :x)) :y (get head :y)}]
+    {:head updated-head-coord
+     :tail head
+     :head-visited (conj hvisited updated-head-coord)
+     :tail-visited (conj tvisited head)}))
 
 (defn perform-move
   "Updates `state` based on the result of `move`

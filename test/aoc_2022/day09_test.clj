@@ -25,3 +25,14 @@
                                         {:x 2 :y 3}}
                         :tail-visited #{{:x 0 :y 3}
                                         {:x 1 :y 3}}})))))
+
+(deftest test-moving-left
+  (testing "Test moving left"
+    (is (= {:head {:x 3 :y 3}
+            :tail {:x 4 :y 3}
+            :head-visited #{{:x 4 :y 3} {:x 3 :y 3}}
+            :tail-visited #{{:x 5 :y 3} {:x 4 :y 3}}}
+           (move-left {:head {:x 4 :y 3}
+                       :tail {:x 5 :y 3}
+                       :head-visited #{{:x 4 :y 3}}
+                       :tail-visited #{{:x 5 :y 3}}})))))
