@@ -10,8 +10,7 @@
 
 ; map to track position of head and tail, as well as visited nodes
 (def initial-state {:head {:x 0 :y 0}
-                    :tail {:x 0 :y 0}
-                    :head-visited #{{:x 0 :y 0}}
+                    :tail {:x 0 :y 0} 
                     :tail-visited #{{:x 0 :y 0}}})
 
 (defn adjacent? [p1 p2]
@@ -21,25 +20,22 @@
   "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
   [state f]
   (let [{head :head
-         tail :tail
-         hvisited :head-visited
+         tail :tail 
          tvisited :tail-visited} state
         updated-head-coord {:x (f (get head :x)) :y (get head :y)}
         updated-tail-coord (if (adjacent? tail updated-head-coord) tail head)]
     {:head updated-head-coord
-     :tail updated-tail-coord
-     :head-visited (conj hvisited updated-head-coord)
+     :tail updated-tail-coord 
      :tail-visited (conj tvisited updated-tail-coord)}))
 
 (defn move-vertically
   "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
   [state f]
-  (let [{head :head tail :tail hvisited :head-visited tvisited :tail-visited} state
+  (let [{head :head tail :tail tvisited :tail-visited} state
         updated-head-coord {:x (get head :x) :y (f (get head :y))}
         updated-tail-coord (if (adjacent? tail updated-head-coord) tail head)]
     {:head updated-head-coord
-     :tail updated-tail-coord
-     :head-visited (conj hvisited updated-head-coord)
+     :tail updated-tail-coord 
      :tail-visited (conj tvisited updated-tail-coord)}))
 
 (defn move-right [state]
