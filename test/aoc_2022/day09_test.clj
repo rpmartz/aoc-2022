@@ -82,3 +82,7 @@
 (deftest test-example
   (testing "Testing problem example"
     (is (= 13 (simulate sample-moves initial-state)))))
+
+(deftest test-part-1
+  (testing "Testing part 1"
+    (is (= 6503 (part-1)))))
