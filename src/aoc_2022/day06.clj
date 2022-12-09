@@ -13,5 +13,4 @@
 
 (do
   (println (part-1 4))
-  (println (part-1 14))
-  )
+  (println (part-1 14)))
