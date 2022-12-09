@@ -1,6 +1,6 @@
 (ns aoc-2022.day07
-  (:require [aoc-2022.common :as aoc]
-            [clojure.string :as s]))
+  (:require
+   [clojure.string :as s]))
 
 (defrecord Directory [name files subdirectores])
 (defrecord File [name size])
