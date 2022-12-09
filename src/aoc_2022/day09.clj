@@ -13,29 +13,24 @@
                     :tail {:x 0 :y 0}
                     :head-visited #{{:x 0 :y 0}}
                     :tail-visited #{{:x 0 :y 0}}})
-
-(defn move-right [state]
-  (let [{head :head 
-         hvisited :head-visited
-         tvisited :tail-visited} state 
-        updated-head-coord {:x (inc (get head :x)) :y (get head :y)}
-        ]
-    {:head updated-head-coord
-     :tail head
-     :head-visited (conj hvisited updated-head-coord)
-     :tail-visited (conj tvisited head)}))
-
-(defn move-left [state]
+(defn move-laterally 
+  "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
+  [state f]
   (let [{head :head
          hvisited :head-visited
          tvisited :tail-visited} state
-        ; todo refactor this into a move-lateral fn that takes an update fn and applies it to x since 
-        ; it is the only thing that really differs between moving left and right
-        updated-head-coord {:x (dec (get head :x)) :y (get head :y)}]
+        updated-head-coord {:x (f (get head :x)) :y (get head :y)}]
     {:head updated-head-coord
      :tail head
      :head-visited (conj hvisited updated-head-coord)
-     :tail-visited (conj tvisited head)}))
+     :tail-visited (conj tvisited head)})
+  )
+
+(defn move-right [state]
+  (move-laterally state inc))
+
+(defn move-left [state]
+  (move-laterally state dec))
 
 (defn perform-move
   "Updates `state` based on the result of `move`
