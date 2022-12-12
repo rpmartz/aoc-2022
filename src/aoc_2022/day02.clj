@@ -1,6 +1,6 @@
 (ns aoc-2022.day02
-  (:require [aoc-2022.common :as common]
-            [clojure.string :as string]))
+  (:require [clojure.string :as string]
+            [clojure.core.match :refer [match]]))
 
 (def letter-map {"A" :rock
                  "B" :paper
@@ -34,16 +34,16 @@
                                   (= :draw outcome) :scissors)))
 
 (defn judge-result [mine theirs]
-  (cond
-    (= :rock mine) (cond (= :rock theirs) :draw
-                         (= :paper theirs) :loss
-                         (= :scissors theirs) :win)
-    (= :paper mine) (cond (= :rock theirs) :win
-                          (= :paper theirs) :draw
-                          (= :scissors theirs) :loss)
-    (= :scissors mine) (cond (= :rock theirs) :loss
-                             (= :paper theirs) :win
-                             (= :scissors theirs) :draw)))
+  (match [mine theirs]
+    [:rock :rock] :draw
+    [:rock :paper] :loss
+    [:rock :scissors] :win
+    [:paper :rock] :win
+    [:paper :paper] :draw
+    [:paper :scissors] :loss
+    [:scissors :rock] :loss
+    [:scissors :paper] :win
+    [:scissors :scissors] :draw))
 
 (defn score-round [choices]
   (let [my-choice (get letter-map (second (string/split choices #"\s")))
@@ -68,5 +68,5 @@
 
 
 (do
-  (part-1)
-  (part-2))
+  (part-1) ; 8890
+  (part-2)) ; 10238
