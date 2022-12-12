@@ -29,4 +29,6 @@
 (pathify ["/"])
 (drop-last ["/"])
 
-(reduce + (filter #(<= % 100000) directory-sizes))
+(vals (first directory-sizes))
+
+(reduce + (filter #(<= % 100000) (vals (first directory-sizes))))
