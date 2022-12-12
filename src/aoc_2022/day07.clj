@@ -24,11 +24,6 @@
               [(:or ["dir" _] ["$" "ls"])] [sizemap dirstack] ; ignore 
               [[filesize _]] [(update-sizemap-with-file (parse-long filesize) sizemap dirstack) dirstack])) [{} []] lines))
 
-(s/join "/" (rest ["/" "zft" "zrtm" "vhdhn" "djfww" "zft"]))
+(let [part-1 (reduce + (filter #(<= % 100000) (vals (first directory-sizes))))]
+  (println (str "Part 1: " part-1)))
 
-(pathify ["/"])
-(drop-last ["/"])
-
-(vals (first directory-sizes))
-
-(reduce + (filter #(<= % 100000) (vals (first directory-sizes))))
