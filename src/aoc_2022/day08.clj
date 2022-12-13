@@ -30,21 +30,21 @@
   (let [column (transpose-column j grid)]
     (subvec column (inc i) (count column))))
 
-(defn from-left? [i j grid]
+(defn scan-from-edge [i j grid f]
   (let [tree-height (get-in grid [i j])]
-    (every? #(< % tree-height) (trees-to-left i j grid))))
+    (every? #(< % tree-height) (f i j grid))))
+
+(defn from-left? [i j grid]
+  (scan-from-edge i j grid trees-to-left))
 
 (defn from-right? [i j grid]
-  (let [tree-height (get-in grid [i j])]
-    (every? #(< % tree-height) (trees-to-right i j grid))))
+   (scan-from-edge i j grid trees-to-right))
 
 (defn from-above? [i j grid]
-  (let [tree-height (get-in grid [i j])]
-    (every? #(< % tree-height) (trees-above i j grid))))
+   (scan-from-edge i j grid trees-above))
 
 (defn from-below? [i j grid]
-  (let [tree-height (get-in grid [i j])]
-    (every? #(< % tree-height) (trees-below i j grid))))
+  (scan-from-edge i j grid trees-below))
 
 (defn visible? [i j grid]
   (cond
