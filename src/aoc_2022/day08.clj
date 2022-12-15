@@ -67,7 +67,6 @@
 (defn part-1 []
   (count (filter #(visible? (first %) (second %) grid) all-coords)))
 
-(do
-  (println (str "Part 1: " (part-1))))
+(println (str "Part 1: " (part-1)))
 
 
