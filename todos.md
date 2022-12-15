@@ -1,0 +1,1 @@
+* move `all-coords` in day 8 into `common.clj`
