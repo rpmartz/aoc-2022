@@ -68,8 +68,8 @@
   (loop [[tree & trees] treeline
          trees-visible 0]
     (cond
-      (nil? tree) trees-visible
-      (>= tree treehouse-tree) (inc trees-visible)
+      (nil? tree) trees-visible  ;reached edge of grid
+      (>= tree treehouse-tree) (inc trees-visible) ; reached tree that blocks view
       :else (recur trees (inc trees-visible)))))
 
 (defn visibility-in-direction [i j grid direction]
