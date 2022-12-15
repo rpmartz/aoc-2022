@@ -81,7 +81,7 @@
       :down (count-trees-outward tree (trees-below i j grid)))))
 
 (defn scenic-score [i j grid]
-  (reduce * (map #( visibility-in-direction i j grid %) [:left :right :up :down])))
+  (reduce * (map #(visibility-in-direction i j grid %) [:left :right :up :down])))
 
 (defn part-1 []
   (count (filter #(visible? (first %) (second %) grid) all-coords)))
@@ -89,10 +89,9 @@
 (defn part-2 []
   (apply max (map #(scenic-score (first %) (second %) grid) all-coords)))
 
-(do 
+(do
   (println (str "Part 1: " (part-1)))
-  (println (str "Part 2: " (part-2)))
-  )
+  (println (str "Part 2: " (part-2))))
 
 
 
