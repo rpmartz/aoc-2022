@@ -15,5 +15,4 @@
   {:x x :y y})
 
 (defn ints [s]
-  (re-seq #"-?[0-9]+" s)
-  )
+  (re-seq #"-?[0-9]+" s))
