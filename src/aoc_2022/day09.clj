@@ -10,7 +10,7 @@
 
 ; map to track position of head and tail, as well as visited nodes
 (def initial-state {:head {:x 0 :y 0}
-                    :tail {:x 0 :y 0} 
+                    :tail {:x 0 :y 0}
                     :tail-visited #{{:x 0 :y 0}}})
 
 (defn adjacent? [p1 p2]
@@ -20,12 +20,12 @@
   "Updates `state` by applying the update function `f` to the `x` coordinate of the current position of head"
   [state f]
   (let [{head :head
-         tail :tail 
+         tail :tail
          tvisited :tail-visited} state
         updated-head-coord {:x (f (get head :x)) :y (get head :y)}
         updated-tail-coord (if (adjacent? tail updated-head-coord) tail head)]
     {:head updated-head-coord
-     :tail updated-tail-coord 
+     :tail updated-tail-coord
      :tail-visited (conj tvisited updated-tail-coord)}))
 
 (defn move-vertically
@@ -35,7 +35,7 @@
         updated-head-coord {:x (get head :x) :y (f (get head :y))}
         updated-tail-coord (if (adjacent? tail updated-head-coord) tail head)]
     {:head updated-head-coord
-     :tail updated-tail-coord 
+     :tail updated-tail-coord
      :tail-visited (conj tvisited updated-tail-coord)}))
 
 (defn move-right [state]
@@ -64,7 +64,7 @@
       (if (= 0 n) state
           (recur (dec n) (fn state))))))
 
-(defn simulate [move-list state] 
+(defn simulate [move-list state]
   (loop [[move & moves] move-list
          state state]
     (if (nil? move) (count (:tail-visited state))
@@ -73,5 +73,5 @@
 (defn part-1 []
   (simulate (map parse-move input) initial-state))
 
-(do
-  (println (part-1)))
+
+(println (part-1))
