@@ -11,4 +11,12 @@
   (testing "Test comparing two equal length lists"
     (is (= -1 (cmp [4] [5])))
     (is (= 0 (cmp [4] [4])))
-    (is (= 1 (cmp [5] [4])))))
+    (is (= 1 (cmp [5] [4]))))
+
+  (testing "Test comparing a list and an int"
+    (is (= -1 (cmp 4 [5])))
+    (is (= -1 (cmp [4] 5)))
+    (is (= 0 (cmp [4] 4)))
+    (is (= 0 (cmp 4 [4])))
+    (is (= 1 (cmp 5 [4])))
+    (is (= 1 (cmp [5] 4)))))
