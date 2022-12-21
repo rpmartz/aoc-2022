@@ -54,10 +54,7 @@
       ; else add .  
       (recur rows (conj res (process-row row))))))
 
-(partition 40 (part-2))
-
-(map #(str/join "" %) (part-2))
-
 (do
-  (println (str "Part 1: " (part-1))))
-
+  (println (str "Part 1: " (part-1)))
+  (println (str "Part 2:"))
+           (map #(str/join "" %) (part-2)))
