@@ -30,29 +30,8 @@
 
 (def values-at-cycles (run instructions))
 
-values-at-cycles
+(defn part-1 []
+  (reduce + (map #(* (inc %) (nth values-at-cycles %)) sum-indicies)))
 
-
-(reduce + (map #(* (inc %) (nth values-at-cycles %)) sum-indicies))
-
-
-(run ["noop" "addx 3" "addx -5"])
-
-
-
-(conj [1 3 5] 8)
-
-(def example-input (slurp "resources/examples/day10.txt"))
-
-(def example-output (run (str/split-lines example-input)))
-
-example-output
-
-(nth example-output 19)
-(nth example-output 59)
-(nth example-output 99)
-(nth example-output 139)
-(nth example-output 179)
-(nth example-output 219)
-
-(reduce + (map #(* (inc %) (nth example-output %)) sum-indicies))
+(do
+  (println (str "Part 1: " (part-1))))
