@@ -30,8 +30,34 @@
 
 (def values-at-cycles (run instructions))
 
+(defn process-row [row]
+  (loop [[sprite-loc & sprite-locs] row
+         n 0
+         res []]
+    (if (nil? sprite-loc)
+      res
+      (recur sprite-locs (inc n) (conj res
+                                       (if (<= (abs (- sprite-loc n)) 1)
+                                         "#"
+                                         "."))))))
+
 (defn part-1 []
   (reduce + (map #(* (inc %) (nth values-at-cycles %)) sum-indicies)))
 
+(defn part-2 []
+  (loop [[row & rows] (partition 40 values-at-cycles)
+         res []]
+    (if (nil? row)
+      res
+      ; sprite-loc is midpoint of sprite 
+      ; if sprite-loc is within 1 of n add # to result
+      ; else add .  
+      (recur rows (conj res (process-row row))))))
+
+(partition 40 (part-2))
+
+(map #(str/join "" %) (part-2))
+
 (do
   (println (str "Part 1: " (part-1))))
+
