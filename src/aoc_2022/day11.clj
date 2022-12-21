@@ -50,21 +50,24 @@
                        :fdst 5}})
 
 (defn turn [monkey]
-  (let [items (get :items monkey)
-        op (get :op monkey)
-        test (get :test monkey)
-        truthy-dest (get :tdst monkey)
-        falsey-dest (get :fdst monkey)]
+  (let [items (get monkey :items)
+        op (get monkey :op)
+        test (get monkey :test)
+        truthy-dest (get monkey :tdst)
+        falsey-dest (get monkey :fdst)]
     (loop [[x & xs] items
            truthy-items []
            falsey-items []]
       (if (nil? x)
         {:monkey (assoc monkey :items [])
-         :res [[truthy-dest truthy-items]
-               [falsey-dest falsey-items]]}
-        (if (true? (test (quot (op x) 3)))
-          (recur xs (conj truthy-items (op x)) falsey-items)
-          (recur xs truthy-items (conj falsey-items (op x))))))))
+         :res [{:dest truthy-dest :items truthy-items}
+               {:dest falsey-dest :items falsey-items}]}
+        (let [value-to-test (quot (op x) 3)]
+           (if (true? (test value-to-test))
+             (recur xs (conj truthy-items value-to-test) falsey-items)
+             (recur xs truthy-items (conj falsey-items value-to-test)))
+          )
+       ))))
 
 (defn build-test [n divisor]
   (= 0 (mod n divisor)))

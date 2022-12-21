@@ -12,4 +12,8 @@
         res (turn monkey)]
     (is (= (get-in res [:monkey :items]) []))
     (is (= (get-in res [:monkey :tdst]) 2))
-    (is (= (get-in res [:monkey :fdst]) 3))))
+    (is (= (get-in res [:monkey :fdst]) 3))
+    (is (= [] (get (first (get res :res)) :items)))
+    (is (= 2 (get (first (get res :res)) :dest)))
+    (is (= [500 620] (get (second (get res :res)) :items)))
+    (= 3 (get (second (get res :res)) :dest))))
